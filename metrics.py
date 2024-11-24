@@ -8,8 +8,8 @@ def abs_average_odds_diff(
 ) -> float:
     """ average odds difference (AOD) between two groups """
     group_1, group_2 = map(lambda x: x.astype(bool), (group_1, group_2))
-    group_1_pred, group_1_actuals = y_pred[group_1.astype(bool)], y_true[group_1.astype(bool)]
-    group_2_pred, group_2_actuals = y_pred[group_2.astype(bool)], y_true[group_2.astype(bool)]
+    group_1_pred, group_1_actuals = y_pred[group_1], y_true[group_1]
+    group_2_pred, group_2_actuals = y_pred[group_2], y_true[group_2]
     delta_tnr = tnr(group_1_pred, group_1_actuals) - tnr(group_2_pred, group_2_actuals)
     delta_tpr = tpr(group_1_pred, group_1_actuals) - tpr(group_2_pred, group_2_actuals)
 
@@ -23,8 +23,8 @@ def abs_treatment_equality_deviance(
 ) -> float:
     """ treatment equality deviance between two groups """
     group_1, group_2 = map(lambda x: x.astype(bool), (group_1, group_2))
-    group_1_pred, group_1_actuals = y_pred[group_1.astype(bool)], y_true[group_1.astype(bool)]
-    group_2_pred, group_2_actuals = y_pred[group_2.astype(bool)], y_true[group_2.astype(bool)]
+    group_1_pred, group_1_actuals = y_pred[group_1], y_true[group_1]
+    group_2_pred, group_2_actuals = y_pred[group_2], y_true[group_2]
     fpr_deviance = np.abs(fpr(group_1_pred, group_1_actuals) - fpr(group_2_pred, group_2_actuals))
     fnr_deviance = np.abs(fnr(group_1_pred, group_1_actuals) - fnr(group_2_pred, group_2_actuals))
 
@@ -38,7 +38,7 @@ def tpr(pred: np.ndarray, actual: np.ndarray) -> float:
     fn = np.count_nonzero((pred == 0) & (actual == 1)) # false neg
     
     tpr = 0 if tp == 0 and fn == 0 else tp/(tp+fn)
-    print("tpr: ", tpr)
+    # print("tpr: ", tpr)
     return(tpr)
 
 def tnr(pred: np.ndarray, actual: np.ndarray) -> float:
@@ -47,7 +47,7 @@ def tnr(pred: np.ndarray, actual: np.ndarray) -> float:
     fp = np.count_nonzero((pred == 1) & (actual == 0)) # false pos
 
     tnr = 0 if tn == 0 and fp == 0 else tn/(tn+fp)
-    print("tnr :", tnr)
+    # print("tnr :", tnr)
     return tnr
 
 def fpr(pred: np.ndarray, actual: np.ndarray) -> float:
